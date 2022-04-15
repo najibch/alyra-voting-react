@@ -35,9 +35,8 @@ export default function RegisteringVoters(props) {
     };
 
     async function startProposalsRegistering() {
-   //     await web3Data.contract.methods.startProposalsRegistering().send({from: web3Data.accounts[0]});
+       // await web3Data.contract.methods.startProposalsRegistering().send({from: web3Data.accounts[0]});
         props.setWorkflowStatus("1");
-        return undefined;
     };
 
     if(web3Data && !web3Data.isOwner) {

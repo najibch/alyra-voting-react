@@ -64,7 +64,7 @@ export default function Workflow() {
             case 0:
                 return <RegisteringVoters setWorkflowStatus = {setWorkflowStatus} />;
             case 1:
-                return <RegisteringProposals setWorkflowStatus = {setWorkflowStatus} />;
+                return <RegisteringProposals workflowStatus = {workflowStatus} setWorkflowStatus = {setWorkflowStatus} />;
             case 2:
 
             default:

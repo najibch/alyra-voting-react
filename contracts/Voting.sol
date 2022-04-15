@@ -32,7 +32,7 @@ contract Voting is Ownable {
     }
 
     WorkflowStatus public workflowStatus;
-    Proposal[] proposalsArray;
+    Proposal[]  proposalsArray;
     mapping (address => Voter) voters;
 
 
@@ -56,6 +56,10 @@ contract Voting is Ownable {
 
     function getOneProposal(uint _id) external onlyVoters view returns (Proposal memory) {
         return proposalsArray[_id];
+    }
+
+    function getProposals() external onlyVoters view returns (Proposal[] memory){
+        return proposalsArray;
     }
 
 
