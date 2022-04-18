@@ -52,14 +52,9 @@ function App() {
     }
   });
 
-    window.ethereum.on('accountsChanged', function (accounts) {
-        console.log("Before change" + web3Data.accounts);
-        console.log('accountsChanges',accounts);
-        web3Data.accounts=accounts;
-        const isOwner=(owner === accounts[0]);
-        setWeb3Data({ accounts,isOwner });
-        console.log("After change" + web3Data.accounts);
-    });
+    window.ethereum.on('accountsChanged', () => {
+        window.location.reload();
+    })
 
     return (
         <Web3Context.Provider value={{ web3Data,setWeb3Data }}>

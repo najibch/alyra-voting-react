@@ -7,6 +7,7 @@ import AddReactionIcon from '@mui/icons-material/AddReaction';
 import StartIcon from '@mui/icons-material/Start';
 import Container from '@mui/material/Container';
 import AlertMessageSnackBar from "./AlertMessageSnackBar";
+import MessageCard from "./MessageCard";
 
 
 
@@ -15,16 +16,16 @@ export default function RegisteringVoters(props) {
 
     const {web3Data, setWeb3Data} = useContext(Web3Context);
     const [inputAddress, setInputAddress] = useState("");
-    const [user, setUser] = useState();
-
+    const [userAddress, setUserAddress] = useState();
     useEffect( async () => {
         try {
+            setUserAddress(web3Data.accounts[0]);
           //  setUser(await web3Data.contract.methods.getVoter(web3Data.accounts[0]).call())
         } catch (error) {
             // Catch any errors for any of the above operations.
             console.error(error);
         }
-    });
+    },[web3Data.accounts]);
 
     async function addVoter() {
         try{
@@ -40,10 +41,10 @@ export default function RegisteringVoters(props) {
         props.setWorkflowStatus("1");
     };
 
-    if(web3Data && !web3Data.isOwner) {
+    if(userAddress && !web3Data.isOwner) {
         return (
             <Container>
-                 <div>Not Showing the content</div>
+                 <MessageCard message={ "We are registering Voters. Please wait for the Proposals Registration."} />
             </Container>
     );
     }
