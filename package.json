@@ -9,15 +9,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-
   "author": "najibch",
   "license": "ISC",
-
   "dependencies": {
     "@openzeppelin/contracts": "^4.5.0",
     "@openzeppelin/test-helpers": "^0.5.15",
     "@truffle/hdwallet-provider": "^2.0.4",
     "dotenv": "^16.0.0",
+    "solc": "^0.8.13",
     "solidity-coverage": "^0.7.20",
     "truffle": "^5.4.29",
     "web3": "^1.7.2"

@@ -1,13 +1,25 @@
-import React,{Component} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import Web3Context from "../Web3Context";
+import Button from '@mui/material/Button';
 
 
-class NavBar extends Component{
+export default function NavBar (){
 
-    render() {
+    const {web3Data, setWeb3Data} = useContext(Web3Context);
+    const [userAddress, setUserAddress] = useState();
+
+    useEffect( async () => {
+        try {
+            setUserAddress(web3Data.accounts[0]);
+        } catch (error) {
+            // Catch any errors for any of the above operations.
+            console.error(error);
+        }
+    });
         return (
             <Box >
                 <AppBar position="static">
@@ -15,11 +27,12 @@ class NavBar extends Component{
                         <Typography variant="h6" >
                             Alyra Voting Dapp
                         </Typography>
+                        <Typography variant="h6" align ="right">
+                            {userAddress}
+                        </Typography>
                     </Toolbar>
                 </AppBar>
             </Box>
         );
-    }
 }
 
-export default NavBar;

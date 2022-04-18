@@ -18,21 +18,8 @@ function App() {
         isOwner : null
     });
 
+    const [workflowStatus, setWorkflowStatus] = useState("0");
     const [owner, setOwner] = useState("");
-
-    const steps = ['Registering Voters', 'Registering Proposals', 'Tallying Vote'];
-
-    const [activeStep, setActiveStep] = React.useState(0);
-
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
-
-    const handleReset = () => {
-        setActiveStep(0);
-    };
-
-    const [address, setAddress] = useState("");
 
 
   useEffect( async () => {
@@ -52,6 +39,8 @@ function App() {
       setOwner(owner);
       const isOwner = (owner === accounts[0]);
 
+      const currentWorkflowStatus = await contract.methods.workflowStatus().call();
+      setWorkflowStatus(currentWorkflowStatus);
       setWeb3Data({ web3, accounts, contract,isOwner });
 
     } catch (error) {
@@ -74,8 +63,9 @@ function App() {
 
     return (
         <Web3Context.Provider value={{ web3Data,setWeb3Data }}>
+            <NavBar />
             <Box className="App">
-                    <Workflow/>
+                    <Workflow workflowStatus = {workflowStatus} setWorkflowStatus = {setWorkflowStatus}/>
             </Box>
         </Web3Context.Provider>
     )

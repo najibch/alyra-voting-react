@@ -5,7 +5,9 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import RegisteringVoters from "./RegisteringVoters";
 import RegisteringProposals from "./RegisteringProposals";
+import VotingSession from "./VotingSession";
 import Web3Context from "../Web3Context";
+import TallyVotes from "./TallyVotes";
 
 
 const steps =
@@ -15,42 +17,25 @@ const steps =
         'Votes Tallied'];
 
 
-export default function Workflow() {
+export default function Workflow(props) {
     const [activeStep, setActiveStep] = useState(0);
     const {web3Data, setWeb3Data} = useContext(Web3Context);
-    const [workflowStatus, setWorkflowStatus] = useState("0");
+   // const [workflowStatus, setWorkflowStatus] = useState("0");
 
 
     useEffect( async () => {
         try {
-          //  setWorkflowStatus(await web3Data.contract.methods.workflowStatus().call());
-           // setUser(await web3Data.contract.methods.getVoter((web3Data.accounts)[0]).call())
-            if(workflowStatus === "0") setActiveStep(0);
-            else if (workflowStatus === "1" || workflowStatus ==="2") setActiveStep(1);
-            else if (workflowStatus === "3" || workflowStatus === "4") setActiveStep(2);
-            else if (workflowStatus === "5") setActiveStep(3);
+            if(props.workflowStatus === "0") setActiveStep(0);
+            else if (props.workflowStatus === "1" || props.workflowStatus ==="2") setActiveStep(1);
+            else if (props.workflowStatus === "3" || props.workflowStatus === "4") setActiveStep(2);
+            else if (props.workflowStatus === "5") setActiveStep(3);
         } catch (error) {
             // Catch any errors for any of the above operations.
             console.error(error);
         }
-    },[workflowStatus]);
+    },[props.workflowStatus]);
 
     async function handleNext () {
-      /*  const accounts = web3Data.accounts;
-        const contract = web3Data.contract;
-        switch (activeStep) {
-            case 0 :
-                await contract.methods.startProposalsRegistering().send({from:accounts[0]});
-            case 1 :
-                await contract.methods.endProposalsRegistering().send({from:accounts[0]});
-            case 2 :
-                await contract.methods.startVotingSession().send({from:accounts[0]});
-            case 3 :
-                await contract.methods.endVotingSession().send({from:accounts[0]});
-            case 4 :
-                await contract.methods.tallyVotes().send({from:accounts[0]});
-
-        }*/
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
@@ -62,13 +47,15 @@ export default function Workflow() {
         console.log('STEEPPP :', activeStep);
         switch (activeStep) {
             case 0:
-                return <RegisteringVoters setWorkflowStatus = {setWorkflowStatus} />;
+                return <RegisteringVoters  workflowStatus = {props.workflowStatus} setWorkflowStatus = {props.setWorkflowStatus}  />;
             case 1:
-                return <RegisteringProposals workflowStatus = {workflowStatus} setWorkflowStatus = {setWorkflowStatus} />;
+                return <RegisteringProposals workflowStatus = {props.workflowStatus} setWorkflowStatus = {props.setWorkflowStatus} />;
             case 2:
-
+                return <VotingSession workflowStatus = {props.workflowStatus} setWorkflowStatus = {props.setWorkflowStatus}/>;
+            case 3:
+               return <TallyVotes workflowStatus = {props.workflowStatus} setWorkflowStatus = {props.setWorkflowStatus} />;
             default:
-                return <div>Not Found</div>;
+                return <div>NOT FOUND</div>;
         }
     }
 

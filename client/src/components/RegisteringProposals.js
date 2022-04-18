@@ -47,13 +47,13 @@ export default function RegisteringProposals(props) {
 
 
     async function endProposalsRegistering() {
-        //await web3Data.contract.methods.endProposalsRegistering().send({from: web3Data.accounts[0]});
+        await web3Data.contract.methods.endProposalsRegistering().send({from: web3Data.accounts[0]});
         props.setWorkflowStatus("2");
     }
 
 
-    function startVotingSession() {
-        //await web3Data.contract.methods.endProposalsRegistering().send({from: web3Data.accounts[0]});
+    async function startVotingSession() {
+        await web3Data.contract.methods.startVotingSession().send({from: web3Data.accounts[0]});
         props.setWorkflowStatus("3");
     }
 

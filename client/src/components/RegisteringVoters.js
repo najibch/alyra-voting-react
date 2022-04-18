@@ -6,6 +6,7 @@ import Web3Context from "../Web3Context";
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import StartIcon from '@mui/icons-material/Start';
 import Container from '@mui/material/Container';
+import AlertMessageSnackBar from "./AlertMessageSnackBar";
 
 
 
@@ -35,14 +36,16 @@ export default function RegisteringVoters(props) {
     };
 
     async function startProposalsRegistering() {
-       // await web3Data.contract.methods.startProposalsRegistering().send({from: web3Data.accounts[0]});
+        await web3Data.contract.methods.startProposalsRegistering().send({from: web3Data.accounts[0]});
         props.setWorkflowStatus("1");
     };
 
     if(web3Data && !web3Data.isOwner) {
         return (
-            <div>Not Showing the content</div>
-        );
+            <Container>
+                 <div>Not Showing the content</div>
+            </Container>
+    );
     }
     return (
         <React.Fragment>

@@ -2,14 +2,17 @@
 
 pragma solidity 0.8.13;
 import "@openzeppelin/contracts/access/Ownable.sol";
-
-
+/// @title Alyra Voting Contract
+/// @author Najib Ch
+/// @notice You can use this contract to run a simple vote
+/// @dev Voting system based on a specific workflow. Owner is the one leading the vote.
 contract Voting is Ownable {
 
     // arrays for draw, uint for single
     // uint[] winningProposalsID;
     // Proposal[] public winningProposals;
     uint public winningProposalID;
+    uint public winningProposalIDVoteCount;
 
     struct Voter {
         bool isRegistered;
@@ -104,6 +107,10 @@ contract Voting is Ownable {
         voters[msg.sender].votedProposalId = _id;
         voters[msg.sender].hasVoted = true;
         proposalsArray[_id].voteCount++;
+        if(proposalsArray[_id].voteCount > winningProposalIDVoteCount) {
+            winningProposalIDVoteCount = proposalsArray[_id].voteCount;
+            winningProposalID = _id;
+        }
 
         emit Voted(msg.sender, _id);
     }
@@ -186,13 +193,13 @@ contract Voting is Ownable {
 
     function tallyVotes() external onlyOwner {
         require(workflowStatus == WorkflowStatus.VotingSessionEnded, "Current status is not voting session ended");
-        uint _winningProposalId;
+        /* uint _winningProposalId;
         for (uint256 p = 0; p < proposalsArray.length; p++) {
             if (proposalsArray[p].voteCount > proposalsArray[_winningProposalId].voteCount) {
                 _winningProposalId = p;
             }
         }
-        winningProposalID = _winningProposalId;
+        winningProposalID = _winningProposalId;*/
 
         workflowStatus = WorkflowStatus.VotesTallied;
         emit WorkflowStatusChange(WorkflowStatus.VotingSessionEnded, WorkflowStatus.VotesTallied);
