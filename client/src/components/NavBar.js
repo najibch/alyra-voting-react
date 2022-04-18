@@ -25,10 +25,10 @@ export default function NavBar (){
                 <AppBar position="static">
                     <Toolbar>
                         <Typography variant="h6" >
-                            Alyra Voting Dapp
+                            Alyra Voting Dapp -
                         </Typography>
                         <Typography variant="h6" align ="right">
-                            {userAddress}
+                            Account : {userAddress}
                         </Typography>
                     </Toolbar>
                 </AppBar>

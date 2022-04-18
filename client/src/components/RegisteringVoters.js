@@ -1,12 +1,10 @@
 import Button from "@mui/material/Button";
 import React, {useContext, useEffect, useState} from "react";
-import {Grid} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Web3Context from "../Web3Context";
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import StartIcon from '@mui/icons-material/Start';
 import Container from '@mui/material/Container';
-import AlertMessageSnackBar from "./AlertMessageSnackBar";
 import MessageCard from "./MessageCard";
 
 
@@ -54,9 +52,13 @@ export default function RegisteringVoters(props) {
                     <TextField id="filled-basic" label="Address" variant="filled"
                                value={inputAddress}
                                onChange={(e) => setInputAddress(e.target.value)}/>
+                </Container>
+                <Container>
                     <Button variant="outlined" startIcon={<AddReactionIcon />} onClick={() => addVoter()} disabled={inputAddress === ""}>
                         Add Voter
                     </Button>
+                </Container>
+                <Container>
                     <Button variant="contained" endIcon={<StartIcon />} onClick={() => startProposalsRegistering()} >
                         Start Proposals Registration
                     </Button>

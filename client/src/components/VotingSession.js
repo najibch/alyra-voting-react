@@ -11,6 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import {Paper} from "@mui/material";
 import StartIcon from "@mui/icons-material/Start";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import MessageCard from "./MessageCard";
 
 export default function VotingSession(props) {
 
@@ -56,20 +57,35 @@ export default function VotingSession(props) {
 
     if(voter && !voter.isRegistered) {
         return (
-            <div>Not Showing the content</div>
-        );
-    }
-
-    if(voter && voter.hasVoted && !web3Data.isOwner)  {
-        return (
-            <div>You have already voted for {voter.votedProposalId}</div>
+            <Container>
+                <MessageCard message={ "You are not registered as a Voter. Please ask to be registered for the next vote."} />
+            </Container>
         );
     }
 
     if(voter && voter.hasVoted && !web3Data.isOwner)  {
         return (
             <Container>
-             <div>You have already voted for {voter.votedProposalId}</div>
+                <MessageCard message={ "You have already voted. Please wait for the Voting Session to finish."} />
+            </Container>
+        );
+    }
+
+    if(props.workflowStatus ==="3" && voter && voter.hasVoted && web3Data.isOwner)  {
+        return (
+            <Container>
+                <MessageCard message={ "You have already voted. Please wait for the Voting Session to finish."} />
+                <Button variant="contained" endIcon={<StartIcon />} onClick={() => endVotingSession()} >
+                    End Voting Session
+                </Button>
+            </Container>
+        );
+    }
+
+    if(props.workflowStatus ==="4" && web3Data.isOwner){
+        return(
+            <Container>
+                <MessageCard message={ "End of Voting Session. Results coming soon ! "} />
                 <Button variant="contained" endIcon={<StartIcon />} onClick={() => tallyVotes()} >
                     Tally Votes
                 </Button>
@@ -77,15 +93,10 @@ export default function VotingSession(props) {
         );
     }
 
-
-
-    if(props.workflowStatus ==="4"){
+    if(props.workflowStatus ==="4" && !web3Data.isOwner){
         return(
             <Container>
-                <div>END OF Voting Session</div>
-                <Button variant="contained" endIcon={<StartIcon />} onClick={() => tallyVotes()} >
-                    Tally Votes
-                </Button>
+                <MessageCard message={ "End of Voting Session. Results coming soon ! "} />
             </Container>
         );
     }
