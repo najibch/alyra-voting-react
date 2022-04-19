@@ -37,6 +37,8 @@ export default function VotingSession(props) {
             await web3Data.contract.methods.setVote(idProposal).send({from: web3Data.accounts[0]});
             const proposals = await web3Data.contract.methods.getProposals().call();
             setProposals(proposals);
+            const voter = await web3Data.contract.methods.getVoter(web3Data.accounts[0]).call();
+            setVoter(voter);
         }
         catch(error){
             console.log(error);
@@ -127,7 +129,9 @@ export default function VotingSession(props) {
                                     <TableCell align="center">{proposal.description}</TableCell>
                                     <TableCell align="center">{proposal.voteCount}</TableCell>
                                     <TableCell align="center">
-                                        <Button variant="outlined" startIcon={<ThumbUpIcon />} onClick={() => setVote(index)}>
+                                        <Button variant="outlined" startIcon={<ThumbUpIcon />} onClick={() => setVote(index)}
+                                        disabled ={voter && voter.hasVoted}
+                                        >
                                             Vote
                                         </Button>
                                     </TableCell>

@@ -44,7 +44,7 @@ export default function RegisteringVoters(props) {
             <Container>
                  <MessageCard message={ "We are registering Voters. Please wait for the Proposals Registration."} />
             </Container>
-    );
+        );
     }
     return (
         <React.Fragment>

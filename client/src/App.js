@@ -27,6 +27,8 @@ function App() {
     const [severity, setSeverity] = React.useState("success");
     const [alertMessage, setAlertMessage] = React.useState("Empty Alert");
 
+
+
   useEffect( async () => {
     try {
       // Get network provider and web3 instance.
@@ -48,47 +50,47 @@ function App() {
       setWorkflowStatus(currentWorkflowStatus);
       setWeb3Data({ web3, accounts, contract,isOwner });
 
-
-        await contract.events.VoterRegistered()
-            .on("data",  event => {
+      await contract.events.VoterRegistered()
+            .on("data",event => {
                 setSeverity("success");
-                setAlertMessage("Voter add with success: " + event.returnValues.voterAddress+".");
+                setAlertMessage("Voter added with success: " + event.returnValues.voterAddress+".");
                 setOpen(true);
             })
-            .on("changed", changed => console.log(changed))
-            .on("error", err => console.log(err))
-            .on("connected", str => console.log(str));
+            .on("changed",changed => console.log(changed))
+            .on("error",err => console.log(err))
+            .on("connected",str => console.log(str));
 
-
-        await contract.events.ProposalRegistered()
-            .on("data",  event => {
+      await contract.events.ProposalRegistered()
+            .on("data",event => {
                 setSeverity("success");
                 setAlertMessage("Proposal registered with success: " + event.returnValues.proposalId+".");
                 setOpen(true);
             })
-            .on("changed", changed => console.log(changed))
-            .on("error", err => console.log(err))
-            .on("connected", str => console.log(str));
+            .on("changed",changed => console.log(changed))
+            .on("error",err => console.log(err))
+            .on("connected",str => console.log(str));
 
-        await contract.events.WorkflowStatusChange()
-            .on("data",  event => {
+      await contract.events.WorkflowStatusChange()
+            .on("data",event => {
                 setSeverity("success");
-                setAlertMessage("Workflow changed from : " + event.returnValues.previousStatus + " to " + event.returnValues.newStatus+".") ;
+                setAlertMessage("Workflow changed from " +
+                    displayWorkflowStatus(event.returnValues.previousStatus) + " to " +
+                    displayWorkflowStatus(event.returnValues.newStatus) +".") ;
                 setOpen(true);
             })
-            .on("changed", changed => console.log(changed))
-            .on("error", err => console.log(err))
-            .on("connected", str => console.log(str));
+            .on("changed",changed => console.log(changed))
+            .on("error",err => console.log(err))
+            .on("connected",str => console.log(str));
 
-        await contract.events.Voted()
-            .on("data",  event => {
+      await contract.events.Voted()
+            .on("data",event => {
                 setSeverity("success");
                 setAlertMessage(event.returnValues.voter + " voted for proposal " + event.returnValues.proposalId+" with success.") ;
                 setOpen(true);
             })
-            .on("changed", changed => console.log(changed))
-            .on("error", err => console.log(err))
-            .on("connected", str => console.log(str));
+            .on("changed",changed => console.log(changed))
+            .on("error",err => console.log(err))
+            .on("connected",str => console.log(str));
 
 
 
@@ -101,9 +103,17 @@ function App() {
     }
   });
 
-    window.ethereum.on('accountsChanged', () => {
-        window.location.reload();
-    })
+
+    function displayWorkflowStatus(workflowStatus) {
+        switch(workflowStatus){
+            case "0" : return "RegisteringVoters";
+            case "1" : return "ProposalsRegistrationStarted";
+            case "2" : return "ProposalsRegistrationEnded";
+            case "3" : return "VotingSessionStarted";
+            case "4" : return "VotingSessionEnded";
+            case "5" : return "VotesTallied";
+        }
+    }
 
     function handleClose(event, reason) {
         if (reason === "clickaway") {

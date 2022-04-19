@@ -21,18 +21,31 @@ export default function NavBar (){
         }
     });
         return (
-            <Box >
+        /*    <Box >
                 <AppBar position="static">
                     <Toolbar>
                         <Typography variant="h6" >
                             Alyra Voting Dapp -
                         </Typography>
-                        <Typography variant="h6" align ="right">
+                        <Typography variant="h6" align: "right">
                             Account : {userAddress}
                         </Typography>
                     </Toolbar>
                 </AppBar>
-            </Box>
+            </Box>*/
+
+    <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+            <Toolbar>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    Alyra Voting Dapp
+                </Typography>
+                <Typography variant="subtitle2" align="right">
+                    Account : {userAddress}
+                </Typography>
+            </Toolbar>
+        </AppBar>
+    </Box>
         );
 }
 

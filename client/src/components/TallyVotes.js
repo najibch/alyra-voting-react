@@ -4,6 +4,7 @@ import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import MessageCard from "./MessageCard";
 
 
 
@@ -27,7 +28,13 @@ export default function TallyVotes() {
         }
     });
 
-
+    if(voter && !voter.isRegistered) {
+        return (
+            <Container>
+                <MessageCard message={ "You are not registered as a Voter. Please ask to be registered for the next vote."} />
+            </Container>
+        );
+    }
     return (
         <React.Fragment>
             <Container>
