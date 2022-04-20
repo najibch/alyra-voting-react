@@ -53,7 +53,7 @@ function App() {
       await contract.events.VoterRegistered()
             .on("data",event => {
                 setSeverity("success");
-                setAlertMessage("Voter added with success: " + event.returnValues.voterAddress+".");
+                setAlertMessage("Voter added with success:  " + event.returnValues.voterAddress+".");
                 setOpen(true);
             })
             .on("changed",changed => console.log(changed))

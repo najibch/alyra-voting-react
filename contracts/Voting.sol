@@ -12,6 +12,7 @@ contract Voting is Ownable {
     // uint[] winningProposalsID;
     // Proposal[] public winningProposals;
     uint public winningProposalID;
+
     uint public winningProposalIDVoteCount;
 
     struct Voter {

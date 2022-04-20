@@ -49,7 +49,7 @@ export default function RegisteringVoters(props) {
     return (
         <React.Fragment>
                 <Container>
-                    <TextField id="filled-basic" label="Address" variant="filled"
+                    <TextField id="outlined-helperText" label="Address" fullWidth margin="dense"
                                value={inputAddress}
                                onChange={(e) => setInputAddress(e.target.value)}/>
                 </Container>
