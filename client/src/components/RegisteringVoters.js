@@ -42,7 +42,7 @@ export default function RegisteringVoters(props) {
     if(userAddress && !web3Data.isOwner) {
         return (
             <Container>
-                 <MessageCard message={ "We are registering Voters. Please wait for the Proposals Registration."} />
+                 <MessageCard message={ "We are registering Voters.  Please wait for the Proposals Registration."} />
             </Container>
         );
     }
