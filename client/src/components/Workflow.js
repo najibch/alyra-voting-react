@@ -44,7 +44,6 @@ export default function Workflow(props) {
     };
 
     function renderStep() {
-        console.log('STEEPPP :', activeStep);
         switch (activeStep) {
             case 0:
                 return <RegisteringVoters  workflowStatus = {props.workflowStatus} setWorkflowStatus = {props.setWorkflowStatus}  />;

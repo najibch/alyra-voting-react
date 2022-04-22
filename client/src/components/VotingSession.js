@@ -65,7 +65,7 @@ export default function VotingSession(props) {
         );
     }
 
-    if(voter && voter.hasVoted && !web3Data.isOwner)  {
+    if(props.workflowStatus ==="3" && voter && voter.hasVoted && !web3Data.isOwner)  {
         return (
             <Container>
                 <MessageCard message={ "You have already voted. Please wait for the Voting Session to finish."} />
@@ -103,12 +103,56 @@ export default function VotingSession(props) {
         );
     }
 
+    if(props.workflowStatus ==="3" && !web3Data.isOwner) {
+        return (
+            <React.Fragment>
+                <Container>
+                    <TableContainer component={Paper}>
+                        <Table sx={{minWidth: 650}} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Proposal ID</TableCell>
+                                    <TableCell>Proposal Description</TableCell>
+                                    <TableCell>Vote Count</TableCell>
+                                    <TableCell>Vote</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {proposals.map((proposal, index) => (
+                                    <TableRow
+                                        key={index}
+                                        sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                    >
+                                        <TableCell component="th" scope="row">
+                                            {index}
+                                        </TableCell>
+                                        <TableCell align="center">{proposal.description}</TableCell>
+                                        <TableCell align="center">{proposal.voteCount}</TableCell>
+                                        <TableCell align="center">
+                                            <Button variant="outlined" startIcon={<ThumbUpIcon/>}
+                                                    onClick={() => setVote(index)}
+                                                    disabled={voter && voter.hasVoted}
+                                            >
+                                                Vote
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Container>
+            </React.Fragment>
+
+        );
+    }
+
 
     return (
         <React.Fragment>
             <Container>
                 <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <Table sx={{minWidth: 650}} aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell>Proposal ID</TableCell>
@@ -121,7 +165,7 @@ export default function VotingSession(props) {
                             {proposals.map((proposal, index) => (
                                 <TableRow
                                     key={index}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                 >
                                     <TableCell component="th" scope="row">
                                         {index}
@@ -129,8 +173,9 @@ export default function VotingSession(props) {
                                     <TableCell align="center">{proposal.description}</TableCell>
                                     <TableCell align="center">{proposal.voteCount}</TableCell>
                                     <TableCell align="center">
-                                        <Button variant="outlined" startIcon={<ThumbUpIcon />} onClick={() => setVote(index)}
-                                        disabled ={voter && voter.hasVoted}
+                                        <Button variant="outlined" startIcon={<ThumbUpIcon/>}
+                                                onClick={() => setVote(index)}
+                                                disabled={voter && voter.hasVoted}
                                         >
                                             Vote
                                         </Button>
@@ -142,12 +187,11 @@ export default function VotingSession(props) {
                 </TableContainer>
             </Container>
             <Container>
-                <Button variant="contained" endIcon={<StartIcon />} onClick={() => endVotingSession()} >
+                <Button variant="contained" endIcon={<StartIcon/>} onClick={() => endVotingSession()}>
                     End Voting Session
                 </Button>
             </Container>
         </React.Fragment>
 
     );
-
 }

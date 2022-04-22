@@ -45,6 +45,13 @@ contract Voting is Ownable {
     event ProposalRegistered(uint proposalId);
     event Voted (address voter, uint proposalId);
 
+    /**
+      * @dev Constructor adding the owner on the voter list.
+     */
+    constructor() {
+        voters[msg.sender].isRegistered = true;
+        emit VoterRegistered(msg.sender);
+    }
 
     /// @notice Modifiers to only allow registered voters
     /// @dev Verify that sender is registered in voters mapping
@@ -126,11 +133,11 @@ contract Voting is Ownable {
     function setVote( uint _id) external onlyVoters {
         require(workflowStatus == WorkflowStatus.VotingSessionStarted, 'Voting session havent started yet');
         require(voters[msg.sender].hasVoted != true, 'You have already voted');
-        require(_id <= proposalsArray.length, 'Proposal not found'); // pas obligé, et pas besoin du >0 car uint
-
+        require(_id < proposalsArray.length, 'Proposal not found'); // pas obligé, et pas besoin du >0 car uint
         voters[msg.sender].votedProposalId = _id;
         voters[msg.sender].hasVoted = true;
         proposalsArray[_id].voteCount++;
+
         if(proposalsArray[_id].voteCount > winningProposalIDVoteCount) {
             winningProposalIDVoteCount = proposalsArray[_id].voteCount;
             winningProposalID = _id;
